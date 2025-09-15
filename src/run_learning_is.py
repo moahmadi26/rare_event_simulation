@@ -60,10 +60,10 @@ def create_config_from_json(json_path: str):
         target_condition=target_condition,
         dt_learning=dt_learning,
         dt_estimation=dt_estimation,
-        num_iterations=20,     # Reduced from 100
-        batch_size=50,         # Reduced from 10000  
+        num_iterations=100,     # Reduced from 100
+        batch_size=10000,         # Reduced from 10000  
         learning_rate=0.01,
-        mc_samples_final=5000  # Reduced from 100000
+        mc_samples_final=100000  # Reduced from 100000
     )
 
 
