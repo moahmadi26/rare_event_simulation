@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/muller_c_element/muller_c_element.sm",
+    "model_name": "muller_c_element_consensus_y",
+    "target_variable": "Y",
+    "target_value": "110",
+    "max_time": "300.0",
+    "description": "Rare event: Consensus at high Y level (Y >= 110)"
+}

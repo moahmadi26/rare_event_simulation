@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/toggle_switch/toggle_switch.sm",
+    "model_name": "toggle_switch_high_tetr",
+    "target_variable": "TetR",
+    "target_value": "200",
+    "max_time": "500.0",
+    "description": "Rare event: Switch to high TetR state (TetR >= 200)"
+}

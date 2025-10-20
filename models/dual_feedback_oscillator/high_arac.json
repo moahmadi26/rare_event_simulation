@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/dual_feedback_oscillator/dual_feedback_oscillator.sm",
+    "model_name": "dual_feedback_high_arac",
+    "target_variable": "AraC",
+    "target_value": "80",
+    "max_time": "500.0",
+    "description": "Rare event: High AraC peak expression (AraC >= 80)"
+}

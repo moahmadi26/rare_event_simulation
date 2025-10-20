@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/repressilator/repressilator.sm",
+    "model_name": "repressilator_high_tetr",
+    "target_variable": "TetR",
+    "target_value": "80",
+    "max_time": "500.0",
+    "description": "Rare event: High TetR peak expression (TetR >= 80)"
+}

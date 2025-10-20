@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/repressilator/repressilator.sm",
+    "model_name": "repressilator_high_laci",
+    "target_variable": "LacI",
+    "target_value": "80",
+    "max_time": "500.0",
+    "description": "Rare event: High LacI peak expression (LacI >= 80)"
+}

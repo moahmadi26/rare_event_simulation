@@ -1,0 +1,96 @@
+// Lac Operon Model
+// Based on the state-dependent dwSSA paper
+// Models the regulation of lactose metabolism in E. coli
+
+ctmc
+
+// Rate constants
+const double k1 = 0.02;    // Transcription rate (repressed)
+const double k2 = 0.25;    // Transcription rate (derepressed)
+const double k3 = 0.1;     // Translation rate
+const double k4 = 0.001;   // mRNA degradation rate
+const double k5 = 0.0002;  // Protein degradation rate
+const double k6 = 0.01;    // Repressor-operator binding rate
+const double k7 = 0.1;     // Repressor-operator unbinding rate
+const double k8 = 0.001;   // Allolactose binding to repressor
+const double k9 = 0.01;    // Allolactose unbinding from repressor
+const double k10 = 0.0001; // Lactose import rate (basal)
+const double k11 = 0.001;  // Lactose import rate (induced)
+const double k12 = 0.01;   // Lactose to allolactose conversion
+const double k13 = 0.001;  // Allolactose degradation
+const double k14 = 0.001;  // Lactose degradation
+
+module lac_operon
+
+    // State variables
+    O : int init 1;        // Operator site (0=bound by repressor, 1=free)
+    M : int init 0;        // lacZ mRNA molecules
+    P : int init 0;        // β-galactosidase protein molecules
+    R : int init 10;       // Active repressor molecules
+    Ri : int init 0;       // Inactive repressor (bound to allolactose)
+    L : int init 0;        // Intracellular lactose molecules
+    A : int init 0;        // Allolactose molecules
+    Pm : int init 5;       // Permease molecules
+    
+    // Transcription (repressed state)
+    [r1] (O=0) -> k1 : (M'=M+1);
+    
+    // Transcription (derepressed state)
+    [r2] (O=1) -> k2 : (M'=M+1);
+    
+    // Translation of β-galactosidase
+    [r3] (M>0) -> k3*M : (P'=P+1);
+    
+    // Translation of permease
+    [r4] (M>0) -> k3*M*0.2 : (Pm'=Pm+1);
+    
+    // mRNA degradation
+    [r5] (M>0) -> k4*M : (M'=M-1);
+    
+    // β-galactosidase degradation
+    [r6] (P>0) -> k5*P : (P'=P-1);
+    
+    // Permease degradation
+    [r7] (Pm>0) -> k5*Pm : (Pm'=Pm-1);
+    
+    // Repressor binding to operator
+    [r8] (O=1) & (R>0) -> k6*R : (O'=0) & (R'=R-1);
+    
+    // Repressor unbinding from operator
+    [r9] (O=0) -> k7 : (O'=1) & (R'=R+1);
+    
+    // Allolactose binding to repressor (inactivation)
+    [r10] (R>0) & (A>0) -> k8*R*A : (R'=R-1) & (Ri'=Ri+1) & (A'=A-1);
+    
+    // Allolactose unbinding from repressor (reactivation)
+    [r11] (Ri>0) -> k9*Ri : (R'=R+1) & (Ri'=Ri-1) & (A'=A+1);
+    
+    // Lactose import (basal)
+    [r12] true -> k10*1000 : (L'=L+1);
+    
+    // Lactose import (permease-mediated)
+    [r13] (Pm>0) -> k11*Pm*1000 : (L'=L+1);
+    
+    // Lactose to allolactose conversion (by β-galactosidase)
+    [r14] (L>0) & (P>0) -> k12*L*P/(100+L) : (L'=L-1) & (A'=A+1);
+    
+    // Allolactose degradation
+    [r15] (A>0) -> k13*A : (A'=A-1);
+    
+    // Lactose degradation (metabolism)
+    [r16] (L>0) & (P>0) -> k14*L*P/(100+L) : (L'=L-1);
+
+endmodule
+
+// Rewards for analysis (optional)
+rewards "protein_level"
+    true : P;
+endrewards
+
+rewards "mrna_level"
+    true : M;
+endrewards
+
+rewards "lactose_level"
+    true : L;
+endrewards

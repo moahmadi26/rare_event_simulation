@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/muller_c_element/muller_c_element.sm",
+    "model_name": "muller_c_element_synchronization",
+    "target_variable": "D",
+    "target_value": "100",
+    "max_time": "400.0",
+    "description": "Rare event: Synchronization with high D level (D >= 100)"
+}

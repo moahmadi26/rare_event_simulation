@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/repressilator/repressilator.sm",
+    "model_name": "repressilator_sync",
+    "target_variable": "CI",
+    "target_value": "70",
+    "max_time": "300.0",
+    "description": "Rare event: Early synchronization to high CI (CI >= 70 before t=300)"
+}

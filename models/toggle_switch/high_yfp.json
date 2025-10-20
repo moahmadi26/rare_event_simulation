@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/toggle_switch/toggle_switch.sm",
+    "model_name": "toggle_switch_high_yfp",
+    "target_variable": "YFP",
+    "target_value": "300",
+    "max_time": "1000.0",
+    "description": "Rare event: High YFP expression (YFP >= 300)"
+}

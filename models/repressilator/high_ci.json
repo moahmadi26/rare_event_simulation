@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/repressilator/repressilator.sm",
+    "model_name": "repressilator_high_ci",
+    "target_variable": "CI",
+    "target_value": "80",
+    "max_time": "500.0",
+    "description": "Rare event: High CI peak expression (CI >= 80)"
+}

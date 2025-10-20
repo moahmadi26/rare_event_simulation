@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/dual_feedback_oscillator/dual_feedback_oscillator.sm",
+    "model_name": "dual_feedback_sync",
+    "target_variable": "LacI",
+    "target_value": "75",
+    "max_time": "300.0",
+    "description": "Rare event: Early phase synchronization (LacI >= 75 before t=300)"
+}
