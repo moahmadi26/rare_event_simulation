@@ -186,7 +186,7 @@ Each method provides:
 
 Results are printed to console and can be saved to JSON files for further analysis.
 
-## Advanced Configuration
+## Configuration
 
 ### Parallel Processing
 All methods support parallel execution. Adjust the number of processors in the run scripts:
