@@ -1,5 +1,5 @@
 {
-  "model_path": "/home/models/sirs/sirs_model.prism",
+  "model_path": "/home/models/phase_1/sirs/sirs_model.prism",
   "target_variable": "I",
   "target_value": 60,
   "max_time": 30.0,

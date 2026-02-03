@@ -2,7 +2,7 @@ import sys
 import json
 import time
 import multiprocessing
-from guidedwssa import guidedwssa_train, guidedwssa
+from guidedwssa import guidedwssa
 from prism_parser import parser
 import numpy as np
 from utils import suppress_c_output
@@ -10,13 +10,13 @@ import math
 
 
 def main(json_path):
+    start_time = time.time()
     #############################################################################################
-    num_procs = 10       # number of processors used for parallel execution
+    num_procs = 4       # number of processors used for parallel execution
     
     # Hyperparameters
-    N_train = 100_000    # total number of trajectories used for training
     K = 4                # K ensembles of size N are used to estimate the probability of event
-    N = 10_000_000       # number of trajectories used in each ensemble
+    N = 10_000       # number of trajectories used in each ensemble
     negative_method = 'C'  # method for resolving negative propensities ('A', 'B', or 'C')
     #############################################################################################
     
@@ -45,39 +45,8 @@ def main(json_path):
     print(f"Negative resolution method: {negative_method}")
     print("-" * 50)
     
-    # Training phase
-    print(f"Training phase with {N_train} trajectories...")
     start_time = time.time()
-    
-    # Split training trajectories across processors
-    N_vec = [N_train // num_procs 
-             if j != num_procs - 1 
-             else N_train - ((num_procs - 1) * (N_train // num_procs)) 
-             for j in range(num_procs)]
-    
-    tasks = [(model_path, N_vec_j, t_max, target_index, target_value, F, negative_method) 
-             for N_vec_j in N_vec]
-    
-    with multiprocessing.Pool(processes=num_procs) as pool:
-        results = pool.starmap(guidedwssa_train, tasks)
-    
-    # Aggregate results from training
-    all_trajectories = []
-    total_p = 0
-    total_var = 0
-    for trajectories, p, var, conf in results:
-        all_trajectories.extend(trajectories)
-        total_p += p * len(trajectories)
-        total_var += var * len(trajectories)
-    
-    if N_train > 0:
-        total_p /= N_train
-        total_var /= N_train
-    
-    print(f"Training phase finished in {time.time() - start_time:.2f} seconds.")
-    print(f"Training estimate: p = {total_p:.6e}")
-    print("-" * 50)
-    
+       
     # Estimation phase
     print(f"Running estimation with K={K} ensembles of N={N} trajectories each...")
     start_time = time.time()
@@ -121,6 +90,15 @@ def main(json_path):
     print(f"Final probability estimate: {p_hat:.6e}")
     print(f"Standard error: {error:.6e}")
     print(f"95% confidence interval: [{p_hat - 1.96*error:.6e}, {p_hat + 1.96*error:.6e}]")
+
+    return {
+        "method": "Guided-dwSSA",
+        "probability": p_hat,
+        "std_error": error,
+        "ci_lower": p_hat - 1.96*error,
+        "ci_upper": p_hat + 1.96*error,
+        "total_time": time.time() - start_time
+    }
 
 
 if __name__ == "__main__":

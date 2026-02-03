@@ -1,7 +1,6 @@
 {
-	"model_path": "/home/models/enzym/enzym_unb.sm",
+	"model_path": "/home/models/phase_1/enzym/enzym_unb.sm",
 	"model_name": "enzymatic_futile_cycle",
-	"starting_bound": 19,
 	"csl_property": "P=? [true U<=100 (s5<=25)]",
 	"target_variable": "s5",
 	"target_value": "25",

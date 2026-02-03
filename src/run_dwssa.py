@@ -14,10 +14,10 @@ def main(json_path):
     num_procs = 10       # number of processors used for parallel execution
 
     # Hyperparameters
-    N_train = 100_000     # total number of trajectories used to learn the q-table
+    N_train = 1_000     # total number of trajectories used to learn the q-table
     rho = 0.01           # the percentage of trajectories from a batch selected as the current event
     K = 4                # K ensebles of size N are used to estimate the probability of event
-    N = 10_000_000          # number of trajectories used in each ensemble 
+    N = 10_000          # number of trajectories used in each ensemble 
     #############################################################################################
    
     with open(json_path, 'r') as f:
@@ -103,9 +103,20 @@ def main(json_path):
     s_2 = sum(s_2) / (K-1)
     error = math.sqrt(s_2) / math.sqrt(K)
 
-    print(f"simulating {N} trajectories took {time.time() - start_time} seconds.") 
-    print(f"probability estimate = {p_hat}")
-    print(f"standard error = {error}")
+    print(f"simulating {N} trajectories took {time.time() - start_time:.2f} seconds.") 
+    print(f"Final probability estimate: {p_hat:.6e}")
+    print(f"Standard error: {error:.6e}")
+    print(f"95% confidence interval: [{p_hat - 1.96*error:.6e}, {p_hat + 1.96*error:.6e}]")
+    
+    total_time = time.time() - start_time
+    return {
+        "method": "dwSSA",
+        "probability": p_hat,
+        "std_error": error,
+        "ci_lower": p_hat - 1.96*error,
+        "ci_upper": p_hat + 1.96*error,
+        "total_time": total_time
+    }
 
 if __name__ == "__main__":
     config_path = sys.argv[1]

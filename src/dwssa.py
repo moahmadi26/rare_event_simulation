@@ -2,7 +2,6 @@ import math
 import random
 from prism_parser import parser
 from utils import get_reaction_rate, is_target
-from reward import reward
 from utils import suppress_c_output
 def get_propensities(model, state):
     reactions = model.get_reactions_vector()

@@ -22,6 +22,7 @@ def main(json_path):
     print("="*60)
     
     # Load configuration
+    start_main_timer = time.time()
     with open(json_path, 'r') as f:
         json_data = json.load(f)
 
@@ -38,10 +39,10 @@ def main(json_path):
     
     # Standard parameters
     num_procs = json_data.get('num_procs', 16)
-    K_train = json_data.get('K_train', 100000)    # Trajectories per training iteration
-    K_estimate = json_data.get('K_estimate', 1000000)  # Trajectories per estimation ensemble
+    K_train = json_data.get('K_train', 1000)    # Trajectories per training iteration
+    K_estimate = json_data.get('K_estimate', 10000)  # Trajectories per estimation ensemble
     rho = json_data.get('rho', 0.01)              # Elite trajectory percentage
-    num_ensembles = json_data.get('num_ensembles', 10)  # Number of estimation ensembles
+    num_ensembles = json_data.get('num_ensembles', 4)  # Number of estimation ensembles
     
     print(f"Model: {model_name}")
     print(f"Configuration: {json_path}")
@@ -149,16 +150,30 @@ def main(json_path):
     print(f"  Training trajectories: {dwssa_pp.iteration_count * K_train:,}")
     print()
     print(f"Estimation Results:")
-    print(f"  Probability estimate: {results['probability_estimate']:.6e}")
-    print(f"  Standard error: {results['standard_error']:.6e}")
+    print(f"Final probability estimate: {results['probability_estimate']:.6e}")
+    print(f"Standard error: {results['standard_error']:.6e}")
+    
+    ci_low = 0.0
+    ci_high = 0.0
     if results['probability_estimate'] > 0:
-        print(f"  Relative error: {results['standard_error']/results['probability_estimate']:.4f}")
-        print(f"  95% Confidence interval: [{results['probability_estimate'] - 1.96*results['standard_error']:.6e}, "
-              f"{results['probability_estimate'] + 1.96*results['standard_error']:.6e}]")
+        ci_low = results['probability_estimate'] - 1.96*results['standard_error']
+        ci_high = results['probability_estimate'] + 1.96*results['standard_error']
+        print(f"95% confidence interval: [{ci_low:.6e}, {ci_high:.6e}]")
     else:
-        print(f"  Relative error: N/A (no successful trajectories)")
-        print(f"  95% Confidence interval: N/A")
-    print()
+        print(f"95% confidence interval: N/A")
+        
+    total_time = time.time() - start_main_timer # dwssa_plus_plus usually has internal timing, checking start
+    # Wait, need to check where start_time is defined in this file. 
+    # Usually passed or defined at start of main.
+    
+    return {
+        "method": "dwSSA++",
+        "probability": results['probability_estimate'],
+        "std_error": results['standard_error'],
+        "ci_lower": ci_low,
+        "ci_upper": ci_high,
+        "total_time": time.time() - start_main_timer
+    }
     print(f"Computational Performance:")
     print(f"  Total time: {total_time:.2f} seconds")
     print(f"  Total trajectories: {total_trajectories:,}")

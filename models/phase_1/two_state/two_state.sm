@@ -1,0 +1,14 @@
+ctmc
+
+module twostate
+
+x1 : int init 100;
+x2 : int init 0;
+
+[R1] true -> k1 : (x1'=x1-1)&(x2'=x2+1);
+[R2] true -> k2 : (x1'=x1+1)&(x2'=x2-1);
+
+endmodule
+
+const double k1 = 0.12;
+const double k2 = 1;

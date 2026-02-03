@@ -1,0 +1,8 @@
+{
+    "model_path": "/home/models/phase_1/two_state/two_state.sm",
+    "model_name": "two_state",
+    "csl_property": "P=? [true U<=10 (x2>=30)]",
+    "target_variable": "x2",
+    "target_value": "30",
+    "max_time": "10"
+}

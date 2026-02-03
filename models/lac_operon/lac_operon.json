@@ -1,0 +1,8 @@
+{
+    "model_path": "../models/lac_operon/lac_operon.sm",
+    "model_name": "lac_operon_high_protein",
+    "target_variable": "P",
+    "target_value": "100",
+    "max_time": "100.0",
+    "description": "Rare event: High β-galactosidase production (P >= 100)"
+}

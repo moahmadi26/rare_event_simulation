@@ -1,5 +1,5 @@
 {
-	"model_path": "/home/models/single_species/single_species.sm",
+	"model_path": "/home/models/phase_1/single_species/single_species.sm",
 	"model_name": "single_species",
 	"csl_property": "P=? [true U<=100 (s2>=80)]",
 	"target_variable": "s2",
