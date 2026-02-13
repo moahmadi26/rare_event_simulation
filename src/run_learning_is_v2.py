@@ -27,9 +27,9 @@ def main(json_path):
     
     # Check condition string
     csl = json_data.get('csl_property', '')
-    target_condition = 'greater_equal'
-    if '<=' in csl:
-        target_condition = 'less_equal'
+    target_condition = 'less_equal'
+    if '>=' in csl:
+        target_condition = 'greater_equal'
     
     config = ISConfigV2(
         target_index=target_index,
@@ -37,7 +37,7 @@ def main(json_path):
         max_time=max_time,
         target_condition=target_condition,
         num_iterations=20, # Short training
-        batch_size=50,
+        batch_size=1_000,
         learning_rate=0.01,
         hidden_layers=[20, 20]
     )
@@ -70,7 +70,7 @@ def main(json_path):
     
     # Phase 2: Estimate
     K = 4
-    N = 1000
+    N = 10_000
     print(f"Starting Estimation (K={K}, N={N})...")
     
     p_vector = []

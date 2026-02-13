@@ -7,10 +7,5 @@
   "csl_property": "P=? [true U<=30 (I>=60)]",
   "ld": 3,
   "sigma": 5,
-  "smax": 20,
-  "num_procs": 8,
-  "K_train": 50000,
-  "K_estimate": 500000,
-  "rho": 0.01,
-  "num_ensembles": 5
+  "smax": 20
 }

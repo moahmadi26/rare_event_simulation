@@ -12,11 +12,11 @@ import math
 def main(json_path):
     start_time = time.time()
     #############################################################################################
-    num_procs = 4       # number of processors used for parallel execution
+    num_procs = 16       # number of processors used for parallel execution
     
     # Hyperparameters
     K = 4                # K ensembles of size N are used to estimate the probability of event
-    N = 10_000       # number of trajectories used in each ensemble
+    N = 1_000_000       # number of trajectories used in each ensemble
     negative_method = 'C'  # method for resolving negative propensities ('A', 'B', or 'C')
     #############################################################################################
     

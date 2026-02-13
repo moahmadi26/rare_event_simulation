@@ -38,9 +38,9 @@ def main(json_path):
     smax = json_data.get('smax', 20)      # Maximum iterations
     
     # Standard parameters
-    num_procs = json_data.get('num_procs', 16)
-    K_train = json_data.get('K_train', 1000)    # Trajectories per training iteration
-    K_estimate = json_data.get('K_estimate', 10000)  # Trajectories per estimation ensemble
+    num_procs = json_data.get('num_procs', 15)
+    K_train = json_data.get('K_train', 100_000)    # Trajectories per training iteration
+    K_estimate = json_data.get('K_estimate', 1_000_000)  # Trajectories per estimation ensemble
     rho = json_data.get('rho', 0.01)              # Elite trajectory percentage
     num_ensembles = json_data.get('num_ensembles', 4)  # Number of estimation ensembles
     

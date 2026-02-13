@@ -1,7 +1,7 @@
 {
 	"model_path": "/home/models/phase_1/yeast/yeast_unb.sm",
 	"model_name": "yeast_polarization",
-	"csl_property": "P=? [true U<=20 (Gbg=70)]",
+	"csl_property": "P=? [true U<=20 (Gbg>=70)]",
 	"target_variable": "Gbg",
 	"target_value": "70",
 	"max_time": "20"
